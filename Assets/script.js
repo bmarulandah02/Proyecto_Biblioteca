@@ -64,6 +64,44 @@ function editarLibro(index) {
 	actualizarEstadisticas();
 	actualizarCategorias();
 }
+let libroAEditar = null; // variable temporal
+
+function editarLibro(index) {
+	libroAEditar = index; // guardamos el índice
+	const modal = new bootstrap.Modal(document.getElementById('modalEditar'));
+	modal.show(); // mostramos el modal
+}
+
+document
+	.querySelector('#btnConfirmarEditar')
+	.addEventListener('click', function () {
+		if (libroAEditar !== null) {
+			// obtener instancia del modal
+			const modal = bootstrap.Modal.getInstance(
+				document.querySelector('#modalEditar'),
+			);
+			modal.hide(); // cerrar modal
+
+			const confirmar = confirm('¿Seguro que quieres editar este libro?');
+			if (confirmar) {
+				// cargar datos del libro en el formulario
+				const libro = libros[libroAEditar];
+				document.querySelector('#codigo').value = libro.codigo;
+				document.querySelector('#titulo').value = libro.titulo;
+				document.querySelector('#autor').value = libro.autor;
+				document.querySelector('#categoria').value = libro.categoria;
+				document.querySelector('#Año').value = libro.Año;
+				document.querySelector('#estado').value = libro.estado;
+
+				// eliminar el libro de la lista para que se reemplace al guardar
+				libros.splice(libroAEditar, 1);
+			}
+
+			// resetear variable
+			libroAEditar = null;
+		}
+	});
+// ==================
 let libroAEliminar = null; // variable temporal
 
 function eliminarLibro(index) {
@@ -80,25 +118,18 @@ document
 			const modal = bootstrap.Modal.getInstance(
 				document.querySelector('#modalEliminar'),
 			);
-
 			// cerrar el modal ANTES de lanzar confirm()
 			modal.hide();
-
 			// segunda confirmación con alert clásico
 			const confirmar = confirm('¿Seguro que quieres eliminar este libro?');
-
 			if (confirmar) {
 				// eliminar del arreglo
 				libros.splice(libroAEliminar, 1);
-
 				// refrescar tabla y estadísticas
 				mostrarLibros();
 				actualizarEstadisticas();
 				actualizarCategorias();
-
-				
 			}
-
 			// resetear variable
 			libroAEliminar = null;
 		}
@@ -162,3 +193,37 @@ document.querySelector('#ordenarAño').addEventListener('click', function () {
 	libros.sort((a, b) => a.Año - b.Año);
 	mostrarLibros();
 });
+// Escuchar cambios en el filtro de categoría
+document
+	.querySelector('#filtroCategoria')
+	.addEventListener('change', function () {
+		mostrarLibros(); // refrescar la tabla aplicando el filtro
+	});
+
+function mostrarLibros() {
+	const tbody = document.querySelector('#tablaLibros tbody');
+	tbody.innerHTML = '';
+
+	// obtener valor del filtro
+	const filtroCategoria = document.querySelector('#filtroCategoria').value;
+
+	libros.forEach((libro, index) => {
+		// aplicar filtro
+		if (filtroCategoria === '' || libro.categoria === filtroCategoria) {
+			const fila = document.createElement('tr');
+			fila.innerHTML = `
+        <td>${libro.codigo}</td>
+        <td>${libro.titulo}</td>
+        <td>${libro.autor}</td>
+        <td>${libro.categoria}</td>
+        <td>${libro.Año}</td>
+        <td>${libro.estado}</td>
+        <td>
+          <button class="btn btn-warning btn-sm" onclick="editarLibro(${index})">Editar</button>
+          <button class="btn btn-danger btn-sm" onclick="eliminarLibro(${index})">Eliminar</button>
+        </td>
+      `;
+			tbody.appendChild(fila);
+		}
+	});
+}
