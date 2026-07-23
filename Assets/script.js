@@ -2,6 +2,15 @@
 let libros = [];
 const form = document.getElementById("formLibro");
 const tabla = document.querySelector("#tablaLibros tbody");
+// ================== Limpiar Campos ==================
+function limpiarCampos() {
+  document.getElementById("codigo").value = "";
+  document.getElementById("titulo").value = "";
+  document.getElementById("autor").value = "";
+  document.getElementById("categoria").selectedIndex = 0; 
+  document.getElementById("Año").value = "";
+  document.getElementById("estado").selectedIndex = 0;
+}
 // ================== EVENTO GUARDAR ==================
 form.addEventListener("submit", function(e) {
   e.preventDefault();
@@ -19,7 +28,7 @@ form.addEventListener("submit", function(e) {
   mostrarLibros();
   actualizarEstadisticas();
   actualizarCategorias();
-  form.reset();
+  limpiarCampos();
 });
 // ================== MOSTRAR LIBROS ==================
 function mostrarLibros() {
@@ -40,4 +49,27 @@ function mostrarLibros() {
     `;
     tabla.appendChild(fila);
   });
+}
+// ================== EDITAR Y ELIMINAR ==================
+function editarLibro(index) {
+    const libro =libros[index];
+    document.querySelector("#codigo").value = libro.codigo;
+    document.querySelector("#titulo").value = libro.titulo;
+    document.querySelector("#autor").value = libro.autor;
+    document.querySelector("#categoria").value = libro.categoria;
+    document.querySelector("#Año").value = libro.Año;
+    document.querySelector("#estado").value = libro.estado;
+    libros.splice(index, 1);
+    mostrarLibros();
+    actualizarEstadisticas();
+    actualizarCategorias();
+}
+function eliminarLibro(index) {
+    if (confirm("¿Estás seguro de que deseas eliminar este libro?")) {
+        libros.splice(index, 1);
+        mostrarLibros();
+        actualizarEstadisticas();
+        actualizarCategorias();
+         limpiarCampos();
+    }
 }
