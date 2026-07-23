@@ -1,12 +1,111 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link rel="stylesheet" href="./Assets/bootstrap.min.css">
+  <meta charset="UTF-8">
+  <title>Biblioteca Personal</title>
+  <!-- Bootstrap CSS -->
+  <link href="Assets/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-    
-</body>
+<body class="bg-dark text-light">
+
+<div class="container mt-4">
+  <div class="row">
+    <!-- Columna principal -->
+    <div class="col-md-9">
+      <h1 class="text-center mb-4">📚 Biblioteca Personal</h1>
+
+      <!-- Formulario -->
+      <form id="formLibro" class="row g-3">
+        <div class="col-md-2">
+          <input type="text" id="codigo" class="form-control" placeholder="Código" required>
+        </div>
+        <div class="col-md-3">
+          <input type="text" id="titulo" class="form-control" placeholder="Título" required>
+        </div>
+        <div class="col-md-3">
+          <input type="text" id="autor" class="form-control" placeholder="Autor" required>
+        </div>
+        <div class="col-md-2">
+          <select id="categoria" class="form-select" required>
+            <option value="">Categoría...</option>
+            <option value="Novela">Novela</option>
+            <option value="Ciencia">Ciencia</option>
+            <option value="Historia">Historia</option>
+            <option value="Tecnología">Tecnología</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <input type="number" id="anio" class="form-control" placeholder="Año" required>
+        </div>
+        <div class="col-md-2">
+          <select id="estado" class="form-select">
+            <option value="Disponible">Disponible</option>
+            <option value="Prestado">Prestado</option>
+          </select>
+        </div>
+        <div class="col-12">
+          <button type="submit" class="btn btn-success">Guardar</button>
+          <button type="reset" class="btn btn-secondary">Limpiar</button>
+        </div>
+      </form>
+
+      <!-- Barra de herramientas -->
+      <div class="row mt-4">
+        <div class="col-md-4">
+          <input type="text" id="buscar" class="form-control" placeholder="Buscar...">
+        </div>
+        <div class="col-md-3">
+          <select id="filtroCategoria" class="form-select"><option value="">Todas</option></select>
+        </div>
+        <div class="col-md-3">
+          <select id="filtroEstado" class="form-select">
+            <option value="">Todos</option>
+            <option value="Disponible">Disponible</option>
+            <option value="Prestado">Prestado</option>
+          </select>
+        </div>
+        <div class="col-md-2 d-flex gap-2">
+          <button id="ordenarTitulo" class="btn btn-primary btn-sm">Ordenar Título</button>
+          <button id="ordenarAnio" class="btn btn-primary btn-sm">Ordenar Año</button>
+        </div>
+      </div>
+
+      <!-- Tabla -->
+      <table class="table table-striped table-hover mt-4 text-light" id="tablaLibros">
+        <thead class="table-secondary text-dark">
+          <tr>
+            <th>Código</th><th>Título</th><th>Autor</th>
+            <th>Categoría</th><th>Año</th><th>Estado</th><th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Panel lateral colapsable -->
+    <div class="col-md-3">
+      <button class="btn btn-info mb-2 w-100" type="button" data-bs-toggle="collapse" data-bs-target="#panelEstadisticas">
+         Mostrar/Ocultar Estadísticas
+      </button>
+
+      <div class="collapse show" id="panelEstadisticas">
+        <div class="card text-dark">
+          <div class="card-header bg-dark text-white">Estadísticas</div>
+          <div class="card-body">
+            <p>Total libros: <span id="total">0</span></p>
+            <p>Disponibles: <span id="disponibles">0</span></p>
+            <p>Prestados: <span id="prestados">0</span></p>
+            <p>Categorías: <span id="categorias">0</span></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="./Assets/script.js"></script>
+
+	</body>
 </html>
