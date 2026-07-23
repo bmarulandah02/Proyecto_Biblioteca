@@ -29,6 +29,7 @@ form.addEventListener('submit', function (e) {
 	actualizarEstadisticas();
 	actualizarCategorias();
 });
+
 // ================== MOSTRAR LIBROS ==================
 function mostrarLibros() {
 	tabla.innerHTML = '';
@@ -63,15 +64,46 @@ function editarLibro(index) {
 	actualizarEstadisticas();
 	actualizarCategorias();
 }
+let libroAEliminar = null; // variable temporal
+
 function eliminarLibro(index) {
-	if (confirm('¿Estás seguro de que deseas eliminar este libro?')) {
-		libros.splice(index, 1);
-		mostrarLibros();
-		actualizarEstadisticas();
-		actualizarCategorias();
-		limpiarCampos();
-	}
+	libroAEliminar = index; // guardamos el índice
+	const modal = new bootstrap.Modal(document.querySelector('#modalEliminar'));
+	modal.show(); // mostramos el modal
 }
+
+document
+	.querySelector('#btnConfirmarEliminar')
+	.addEventListener('click', function () {
+		if (libroAEliminar !== null) {
+			// obtener instancia del modal
+			const modal = bootstrap.Modal.getInstance(
+				document.querySelector('#modalEliminar'),
+			);
+
+			// 🔑 cerrar el modal ANTES de lanzar confirm()
+			modal.hide();
+
+			// segunda confirmación con alert clásico
+			const confirmar = confirm('¿Seguro que quieres eliminar este libro?');
+
+			if (confirmar) {
+				// eliminar del arreglo
+				libros.splice(libroAEliminar, 1);
+
+				// refrescar tabla y estadísticas
+				mostrarLibros();
+				actualizarEstadisticas();
+				actualizarCategorias();
+
+				// alerta de éxito
+				alert('✅ Libro eliminado correctamente');
+			}
+
+			// resetear variable
+			libroAEliminar = null;
+		}
+	});
 // ================== ESTADÍSTICAS ==================
 function actualizarEstadisticas() {
 	document.querySelector('#total').textContent = libros.length;
@@ -116,18 +148,18 @@ function mostrarFiltrados(lista) {
 	});
 }
 // ================== FILTROS Y ORDENAMIENTO ==================
-document.querySelector('#filtroEstado').addEventListener('change', function() {
-  const estado = this.value;
-  const filtrados = estado ? libros.filter(l => l.estado === estado) : libros;
-  mostrarFiltrados(filtrados);
+document.querySelector('#filtroEstado').addEventListener('change', function () {
+	const estado = this.value;
+	const filtrados = estado ? libros.filter((l) => l.estado === estado) : libros;
+	mostrarFiltrados(filtrados);
 });
 
-document.querySelector('#ordenarTitulo').addEventListener('click', function() {
-  libros.sort((a, b) => a.titulo.localeCompare(b.titulo));
-  mostrarLibros();
+document.querySelector('#ordenarTitulo').addEventListener('click', function () {
+	libros.sort((a, b) => a.titulo.localeCompare(b.titulo));
+	mostrarLibros();
 });
 
-document.querySelector('#ordenarAño').addEventListener('click', function() {
-  libros.sort((a, b) => a.Año - b.Año);
-  mostrarLibros();
+document.querySelector('#ordenarAño').addEventListener('click', function () {
+	libros.sort((a, b) => a.Año - b.Año);
+	mostrarLibros();
 });
