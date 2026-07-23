@@ -96,8 +96,7 @@ document
 				actualizarEstadisticas();
 				actualizarCategorias();
 
-				// alerta de éxito
-				alert('✅ Libro eliminado correctamente');
+				
 			}
 
 			// resetear variable

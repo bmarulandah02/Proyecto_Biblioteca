@@ -63,8 +63,42 @@
 							</select>
 						</div>
 						<div class="col-12">
-							<button type="submit" class="btn btn-success">Guardar</button>
-							<button type="reset" class="btn btn-secondary">Limpiar</button>
+							<button class="btn btn btn-success mb-2 w-5" type="submit" >Guardar</button>
+							<button class="btn btn-secondary mb-2 w-5" type="reset" >Limpiar</button>
+
+							<!-- Botón para abrir el panel lateral -->
+							<button
+								class="btn btn-info mb-2 w-5"
+								type="button"
+								data-bs-toggle="offcanvas"
+								data-bs-target="#panelEstadisticas"
+								aria-controls="panelEstadisticas">
+								Mostrar Estadísticas
+							</button>
+
+							<!-- Panel lateral con offcanvas -->
+							<div
+								class="offcanvas offcanvas-end"
+								tabindex="-1"
+								id="panelEstadisticas"
+								aria-labelledby="panelEstadisticasLabel">
+								<div class="offcanvas-header bg-dark text-white">
+									<h5 class="offcanvas-title" id="panelEstadisticasLabel">
+										Estadísticas
+									</h5>
+									<button
+										type="button"
+										class="btn-close btn-close-white"
+										data-bs-dismiss="offcanvas"
+										aria-label="Cerrar"></button>
+								</div>
+								<div class="offcanvas-body text-white">
+									<p>Total libros: <span id="total">0</span></p>
+									<p>Disponibles: <span id="disponibles">0</span></p>
+									<p>Prestados: <span id="prestados">0</span></p>
+									<p>Categorías: <span id="categorias">0</span></p>
+								</div>
+							</div>
 						</div>
 					</form>
 
@@ -108,7 +142,7 @@
 					<table
 						class="table table-striped table-hover mt-4 text-light"
 						id="tablaLibros">
-						<thead class="table-secondary text-dark">
+						<thead class="table-primary text-dark">
 							<tr>
 								<th>Código</th>
 								<th>Título</th>
@@ -121,29 +155,6 @@
 						</thead>
 						<tbody></tbody>
 					</table>
-				</div>
-
-				<!-- Panel lateral colapsable -->
-				<div class="col-md-3">
-					<button
-						class="btn btn-info mb-2 w-100"
-						type="button"
-						data-bs-toggle="collapse"
-						data-bs-target="#panelEstadisticas">
-						Mostrar/Ocultar Estadísticas
-					</button>
-
-					<div class="collapse show" id="panelEstadisticas">
-						<div class="card text-dark">
-							<div class="card-header bg-dark text-white">Estadísticas</div>
-							<div class="card-body">
-								<p>Total libros: <span id="total">0</span></p>
-								<p>Disponibles: <span id="disponibles">0</span></p>
-								<p>Prestados: <span id="prestados">0</span></p>
-								<p>Categorías: <span id="categorias">0</span></p>
-							</div>
-						</div>
-					</div>
 				</div>
 			</div>
 		</div>
