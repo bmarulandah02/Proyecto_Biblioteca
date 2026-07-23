@@ -81,7 +81,7 @@ document
 				document.querySelector('#modalEliminar'),
 			);
 
-			// 🔑 cerrar el modal ANTES de lanzar confirm()
+			// cerrar el modal ANTES de lanzar confirm()
 			modal.hide();
 
 			// segunda confirmación con alert clásico
